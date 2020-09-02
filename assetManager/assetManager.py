@@ -14,8 +14,8 @@ from flask_user import current_user, login_required, roles_required
 from . import file_upload
 from .uploadFunctions import upload_image  
 
-bp = Blueprint("assetManager", __name__)
+am = Blueprint("assetManager", __name__)
 
-@bp.route("/", methods=["GET"])
+@am.route("/", methods=["GET"])
 def index(name=None): 
     return render_template('index.html')

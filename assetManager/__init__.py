@@ -8,6 +8,7 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 file_upload = FileUpload(db=db)
+mail = Mail()
 
 def create_app(test_config=None):
     # create and configure the app
@@ -34,6 +35,9 @@ def create_app(test_config=None):
          #uploads
         file_upload.init_app(app, db)   
         user_manager = UserManager(app, db, schema.User)
+
+        #Email
+        mail.init_app(app)
 
         #uploads
         # from flask_uploads import (UploadSet, 
