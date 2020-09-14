@@ -8,6 +8,7 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 file_upload = FileUpload(db=db)
+from flask_mail import Mail 
 mail = Mail()
 
 def create_app(test_config=None):
@@ -27,14 +28,14 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    from . import database 
+    from .home import database 
     with app.app_context():
         db.init_app(app)
         
-        from assetManager import assetManager 
+        from .user.schema import User
          #uploads
         file_upload.init_app(app, db)   
-        user_manager = UserManager(app, db, schema.User)
+        user_manager = UserManager(app, db, User)
 
         #Email
         mail.init_app(app)
@@ -51,25 +52,28 @@ def create_app(test_config=None):
         # patch_request_class(app, 50 * 1024 * 1024) #50 MB max file upload
 
         # ALLOWED_EXTENSIONS = images
-      #  dev_db(user_manager)
+        dev_db(user_manager)
 
-    app.register_blueprint(assetManager.bp)
+    from .user import user
+    from .home import assetManager 
+    app.register_blueprint(assetManager.am)
+    app.register_blueprint(user.user_bp)
 
     app.add_url_rule("/", endpoint='index')
 
     return app 
 
 def dev_db(user_manager):
-    from .schema import Role, User 
     db.drop_all()
     db.create_all()
 
-    #Roles 
-    editor = Role(name='Editor')
-    #users
-    user = User(username="laurin", 
-        password=user_manager.hash_password("herewegotesting44"))
-    user.roles.append(editor)
+    from .user.schema import Role 
+    #create User Roles 
+    admin = Role(name='Admin')
+    user = Role(name='User')
+
+    db.session.add(admin)
     db.session.add(user)
     db.session.commit()
+
 

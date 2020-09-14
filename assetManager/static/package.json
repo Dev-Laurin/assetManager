@@ -1,0 +1,23 @@
+{
+  "name": "asset_manager",
+  "version": "1.0.0",
+  "description": "A base flask app.",
+  "main": "index.js",
+  "dependencies": {
+    "popper": "^1.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dev-Laurin/assetManager.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Dev-Laurin/assetManager/issues"
+  },
+  "homepage": "https://github.com/Dev-Laurin/assetManager#readme"
+}

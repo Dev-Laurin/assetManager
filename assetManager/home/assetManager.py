@@ -8,11 +8,11 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy 
 from flask import current_app, g
 
-from assetManager.schema import User
-from assetManager.database import get_db 
+from assetManager.user.schema import User
+from assetManager.home.database import get_db 
 from flask_user import current_user, login_required, roles_required
-from . import file_upload
-from .uploadFunctions import upload_image  
+#from . import file_upload
+#from .uploadFunctions import upload_image  
 
 am = Blueprint("assetManager", __name__)
 
