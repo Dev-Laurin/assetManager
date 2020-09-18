@@ -26,14 +26,15 @@ class User(db.Model, UserMixin):
 
 	id = db.Column(db.Integer, primary_key=True)
 	active = db.Column('is_active', db.Boolean(), nullable=False, server_default='1')
-
+	#Can view the admin tab in the navbar
+	can_view_admin = db.Column('can_view_admin', db.Boolean(), nullable=False, server_default='0')
 	username = db.Column(db.String(120), unique=True, nullable=False)
 	password = db.Column(db.String(200), primary_key=False,
 		unique=False, nullable=False)
 	email = db.Column(db.Unicode(255), nullable=False, server_default=u'', unique=True)
 	email_confirmed_at = db.Column(db.DateTime())
-	totp_secret = db.Column(db.String(32), unique=True)
-	is_admin = db.Column('is_admin', db.Boolean(), nullable=False, server_default='0')
+	totp_secret = db.Column(db.String(40), unique=True)
+	is_disabled = db.Column('is_disabled', db.Boolean(), nullable=False, server_default='0')
 
 	def set_password(self, password):
 		self.password = generate_password_hash(password, 
@@ -43,8 +44,8 @@ class User(db.Model, UserMixin):
 		return check_password_hash(self.password, password)
 
 	def set_totp_secret(self): 
-		#256 bits
-		self.totp_secret = os.urandom(40)
+		#256 bits - using 40 for iOS not compatible with '=' filler chars
+		self.totp_secret = base64.b32encode(os.urandom(40)).decode('utf-8')
 
 	def get_totp_uri(self):
 		print(self.totp_secret)
@@ -65,7 +66,7 @@ class User(db.Model, UserMixin):
 			totp.verify(user_input_code, time_value)
 		except Exception as e: 
 			flash('Invalid code.')
-			return url_for('user.login')
+			return redirect(url_for('user.login'))
 
 	roles = db.relationship('Role', secondary='user_roles')
 
@@ -158,7 +159,10 @@ from flask_admin.contrib.sqla import ModelView
 class CustomModelView(ModelView):
 	def is_accessible(self):
 		try: 
-			return current_user.is_admin 
+			role = Role.query.filter_by(name="Admin").first()
+			if role in current_user.roles: 
+				return True 
+			return False 
 		except: 
 			#Is anonymous
 			return False 

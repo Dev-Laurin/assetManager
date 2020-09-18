@@ -79,14 +79,22 @@ def dev_db(user_manager):
     from .user.schema import Role, User
     #create User Roles 
     admin = Role(name='Admin')
-    user = Role(name='User')
+    basic = Role(name='User')
 
     db.session.add(admin)
-    db.session.add(user)
+    db.session.add(basic)
     db.session.commit()
 
-    user = User(username="tester", email="test@gmail.com", password=user_manager.hash_password("Flaskpass5"), is_admin=True)
+    #Admin user
+    user = User(username="tester", email="test@gmail.com", 
+    password=user_manager.hash_password("Flaskpass5"), can_view_admin=True)
     user.roles.append(admin) 
     db.session.add(user)
     db.session.commit()
 
+    #Basic User 
+    user = User(username="basic", email="test1@gmail.com", 
+    password=user_manager.hash_password("Flaskpass5"))
+    user.roles.append(basic) 
+    db.session.add(user)
+    db.session.commit()

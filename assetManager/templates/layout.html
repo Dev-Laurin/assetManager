@@ -34,7 +34,7 @@
 					<a class="dropdown-item" href="#">Another logged in action</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="/user/sign-out">Logout</a>
-					{% if current_user.is_admin %}
+					{% if current_user.can_view_admin %}
 						<a class="dropdown-item" href="/admin">Admin</a>
 					{% endif %}
 				</div>
