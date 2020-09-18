@@ -50,49 +50,51 @@
 			</form>
 			</div>
 		</nav>
-	</header>
 
-	<main class="flex-fill">
-		<div class="container">
-			<div class="row"> 
-			  {% with messages = get_flashed_messages(with_categories=true) %}
-				{% if messages %}
-				  <ul class=flashes>
-					{% for category, message in messages %}
-					  {% if category=="error" %}
-					  <div class="alert alert-danger" role="alert">
-						{{ message }}
-					  </div>
-					  {% else %}
-					  <div class="alert alert-{{category}}" role="alert">
-						{{ message }}
-					  </div>
-					  {% endif %}
-					{% endfor %}
-				  </ul>
-				{% endif %}
-			  {% endwith %}
-			</div> 
-			<div class="row mt-5">
-				{% block main %}
-				{% endblock %}
+		<main class="flex-fill">
+			<div class="container">
+				<div class="row"> 
+				{% with messages = get_flashed_messages(with_categories=true) %}
+					{% if messages %}
+					<ul class=flashes>
+						{% for category, message in messages %}
+						{% if category=="error" %}
+						<div class="alert alert-danger" role="alert">
+							{{ message }}
+						</div>
+						{% else %}
+						<div class="alert alert-{{category}}" role="alert">
+							{{ message }}
+						</div>
+						{% endif %}
+						{% endfor %}
+					</ul>
+					{% endif %}
+				{% endwith %}
+				</div> 
+				<div class="mt-5">
+					{% block main %}
+					{% endblock %}
+				</div>
 			</div>
-		</div>
-	</main>
+		</main>
 		
-	<!-- Footer --> 
-		<footer class="footer"> 
+		<!-- Footer --> 
+		<footer class="footer border-top"> 
 			<div class="container"> 
-				<span class="text-muted"> 
-					AssetManager © 2020 Copyright
-					<div> 
-						<a href="/privacy">Privacy Policy</a>
+				<center>
+					<div class="row">
+						<div class="col text-muted">
+							AssetManager © 2020 Copyright
+						</div>
+						<div class="col">
+							<a class="grey-text text-lighten-3" href="https://github.com/"><i class="fab fa-github"></i></a>
+						</div>
+						<div class="col">
+							<a href="/privacy">Privacy Policy</a>
+						</div>
 					</div>
-					<div>
-						<a class="grey-text text-lighten-3" href="https://github.com/"><i class="fab fa-github"></i></a>
-					</div>
-				</span>
-				
+				</center>
 			</div>
 		</footer> 
 
