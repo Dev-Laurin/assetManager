@@ -45,7 +45,7 @@ class User(db.Model, UserMixin):
 
 	def set_totp_secret(self): 
 		#256 bits - using 40 for iOS not compatible with '=' filler chars
-		self.totp_secret = base64.b32encode(os.urandom(40)).decode('utf-8')
+		self.totp_secret = os.urandom(40)
 
 	def get_totp_uri(self):
 		print(self.totp_secret)

@@ -25,6 +25,7 @@
     {% if user_manager.USER_ENABLE_CHANGE_PASSWORD %}
         <p><a href="{{ url_for('user.change_password') }}">{%trans%}Change password{%endtrans%}</a></p>
     {% endif %}
+    <p><a href="{{ url_for('user_bp.change_two_factor') }}">{%trans%}Change two factor authentication{%endtrans%}</a></p>
 {% endif %}
 
 {% endblock %}

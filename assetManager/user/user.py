@@ -15,6 +15,7 @@ import io
 user_bp = Blueprint("user_bp", __name__, template_folder='templates')
 
 @user_bp.route("/twofactor")
+@roles_required(['User'])
 def setup_two_factor(name=None):
     return render_template(
         'two-factor-setup.html', 
@@ -22,6 +23,7 @@ def setup_two_factor(name=None):
         qrcode='/qrcode')
 
 @user_bp.route("/qrcode")
+@roles_required(['User'])
 def qrcode(name=None):
     #render qrcode 
     url = pyqrcode.create(current_user.get_totp_uri())
@@ -34,3 +36,8 @@ def qrcode(name=None):
         'Expires': '0'
     }
 
+@user_bp.route("/change2FA")
+@roles_required(['User'])
+def change_two_factor(name=None):
+    current_user.set_totp_secret()
+    return redirect(url_for('user_bp.setup_two_factor'))
