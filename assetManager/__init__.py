@@ -76,7 +76,7 @@ def dev_db(user_manager):
     db.drop_all()
     db.create_all()
 
-    from .user.schema import Role 
+    from .user.schema import Role, User
     #create User Roles 
     admin = Role(name='Admin')
     user = Role(name='User')
@@ -85,4 +85,8 @@ def dev_db(user_manager):
     db.session.add(user)
     db.session.commit()
 
+    user = User(username="tester", email="test@gmail.com", password=user_manager.hash_password("Flaskpass5"), is_admin=True)
+    user.roles.append(admin) 
+    db.session.add(user)
+    db.session.commit()
 

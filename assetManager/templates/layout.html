@@ -33,6 +33,9 @@
 					<a class="dropdown-item" href="#">Another logged in action</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="/user/sign-out">Logout</a>
+					{% if current_user.is_admin %}
+						<a class="dropdown-item" href="/admin">Admin</a>
+					{% endif %}
 				</div>
 				</li>
 				{% else %}
@@ -53,10 +56,10 @@
 
 		<main class="flex-fill">
 			<div class="container">
-				<div class="row"> 
+				<div class="mt-3" style="margin-left:-15px;"> 
 				{% with messages = get_flashed_messages(with_categories=true) %}
 					{% if messages %}
-					<ul class=flashes>
+					<div class="flashes">
 						{% for category, message in messages %}
 						{% if category=="error" %}
 						<div class="alert alert-danger" role="alert">
@@ -68,7 +71,7 @@
 						</div>
 						{% endif %}
 						{% endfor %}
-					</ul>
+					</div>
 					{% endif %}
 				{% endwith %}
 				</div> 
@@ -102,6 +105,8 @@
 		{% block modals %}{% endblock %} 
 
 		<!-- Include Javascript from libraries --> 
+		<script type="text/javascript" src="../static/node_modules/jquery/dist/jquery.min.js"></script>
+		<script type="text/javascript" src="../static/node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
 		<script type="text/javascript" src="../static/bootstrap-4.5.2-dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../static/js/main.js"></script>
 	</div>

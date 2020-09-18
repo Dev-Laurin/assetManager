@@ -4,7 +4,9 @@
   "description": "A base flask app.",
   "main": "index.js",
   "dependencies": {
+    "@popperjs/core": "^2.4.4",
     "bootstrap": "^4.5.2",
+    "jquery": "^3.5.1",
     "popper": "^1.0.1"
   },
   "devDependencies": {},

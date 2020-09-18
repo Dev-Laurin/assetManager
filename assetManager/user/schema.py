@@ -29,6 +29,7 @@ class User(db.Model, UserMixin):
 	email = db.Column(db.Unicode(255), nullable=False, server_default=u'', unique=True)
 	email_confirmed_at = db.Column(db.DateTime())
 	totp_secret = db.Column(db.String(32), unique=True)
+	is_admin = db.Column('is_admin', db.Boolean(), nullable=False, server_default='0')
 
 	def set_password(self, password):
 		self.password = generate_password_hash(password, 
