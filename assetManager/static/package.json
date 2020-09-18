@@ -4,6 +4,7 @@
   "description": "A base flask app.",
   "main": "index.js",
   "dependencies": {
+    "bootstrap": "^4.5.2",
     "popper": "^1.0.1"
   },
   "devDependencies": {},
