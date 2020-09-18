@@ -16,7 +16,7 @@ from flask_admin.contrib.sqla import ModelView
 
 def create_app(test_config=None):
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
+    app = Flask(__name__, instance_relative_config=True, template_folder='templates')
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -35,7 +35,7 @@ def create_app(test_config=None):
     with app.app_context():
         db.init_app(app)
         
-        from .user.schema import User, Role
+        from .user.schema import User, Role, CustomModelView
          #uploads
         file_upload.init_app(app, db)   
         user_manager = UserManager(app, db, User)
@@ -46,8 +46,8 @@ def create_app(test_config=None):
         #Flask Admin 
         admin = Admin(app, name="AssetManager", 
         template_mode='bootstrap3')
-        admin.add_view(ModelView(User, db.session))
-        admin.add_view(ModelView(Role, db.session))
+        admin.add_view(CustomModelView(User, db.session))
+        admin.add_view(CustomModelView(Role, db.session))
 
         #uploads
         # from flask_uploads import (UploadSet, 

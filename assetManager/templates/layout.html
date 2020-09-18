@@ -9,20 +9,21 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 	<!-- Tell browser we are optimized for mobile --> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+	<title>{{ user_manager.USER_APP_NAME }}</title>
+
+	{# *** Allow sub-templates to insert extra html to the head section (Flask User) *** #}
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
 	<div class="d-flex flex-column sticky-footer-wrapper"> 
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
-			<a class="navbar-brand" href="#">Navbar</a>
+			<a class="navbar-brand" href="/">{{ user_manager.USER_APP_NAME }}</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 			</button>
 		
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active">
-				<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-				</li>
 				{% if current_user.is_authenticated %}
 				<li class="nav-item dropdown">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -43,9 +44,6 @@
 					<a class="nav-link" href="/user/sign-in">Login</a>
 				</li>
 				{% endif %}
-				<li class="nav-item">
-				<a class="nav-link disabled" href="#">Disabled</a>
-				</li>
 			</ul>
 			<form class="form-inline my-2 my-lg-0">
 				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -88,7 +86,7 @@
 				<center>
 					<div class="row">
 						<div class="col text-muted">
-							AssetManager © 2020 Copyright
+							AssetManager © {{ user_manager.USER_COPYRIGHT_YEAR }} Copyright {{ user_manager.USER_APP_VERSION }}
 						</div>
 						<div class="col">
 							<a class="grey-text text-lighten-3" href="https://github.com/"><i class="fab fa-github"></i></a>
@@ -109,6 +107,9 @@
 		<script type="text/javascript" src="../static/node_modules/@popperjs/core/dist/umd/popper.min.js"></script>
 		<script type="text/javascript" src="../static/bootstrap-4.5.2-dist/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="../static/js/main.js"></script>
+
+		{# *** Allow sub-templates to insert extra html to the bottom of the body *** #}
+    	{% block extra_js %}{% endblock %}
 	</div>
 </body>
 

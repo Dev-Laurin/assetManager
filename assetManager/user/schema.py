@@ -1,7 +1,11 @@
+from flask import (
+    url_for,  
+    redirect
+)
 from werkzeug.security import generate_password_hash, check_password_hash
 from assetManager.home.database import get_db
 from datetime import datetime 
-from flask_user import UserMixin, UserManager
+from flask_user import UserMixin, UserManager, current_user
 from wtforms import PasswordField
 from wtforms.validators import InputRequired, Length
 
@@ -148,3 +152,17 @@ class CustomUserManager(UserManager):
 					  form=login_form,
 					  login_form=login_form,
 					  register_form=register_form)
+
+from flask_admin.contrib.sqla import ModelView 
+#For Flask Admin - only admins can view 
+class CustomModelView(ModelView):
+	def is_accessible(self):
+		try: 
+			return current_user.is_admin 
+		except: 
+			#Is anonymous
+			return False 
+
+	def inaccessible_callback(self, name, **kwargs):
+		#redirect to login page if user doesnt have access
+		return redirect(url_for('user.login'))  
